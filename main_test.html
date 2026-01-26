@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mango Bank | Transaction Verification</title>
+    <style>
+        :root {
+            --mango-orange: #FF8C00;
+            --mango-leaf: #4CAF50; /* Slightly brightened for dark mode visibility */
+            --bg-gray: #F4F7F6;
+            --text-dark: #333;
+            --text-light: #666;
+            --white: #ffffff;
+            --container-bg: #ffffff;
+            --input-border: #ddd;
+        }
+
+        /* Dark Mode Overrides */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-gray: #121212;
+                --text-dark: #e0e0e0;
+                --text-light: #b0b0b0;
+                --white: #1e1e1e;
+                --container-bg: #1e1e1e;
+                --input-border: #444;
+            }
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-gray);
+            color: var(--text-dark);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background: var(--container-bg);
+            width: 100%;
+            max-width: 450px;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            border-top: 8px solid var(--mango-orange);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--mango-orange);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .logo span {
+            color: var(--mango-leaf);
+        }
+
+        h2 {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-top: 0.5rem;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--input-border);
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+            background: transparent;
+            color: var(--text-dark);
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--mango-orange);
+        }
+
+        button {
+            width: 100%;
+            background-color: var(--mango-orange);
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background-color: #e67e00;
+        }
+
+        #result {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px dashed #555;
+            display: none;
+        }
+
+        .data-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+        }
+
+        .data-label {
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        .data-value {
+            font-weight: 700;
+            color: var(--mango-leaf);
+        }
+
+        .error {
+            color: #ff5252;
+            background: rgba(211, 47, 47, 0.1);
+            padding: 10px;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 0.9rem;
+            display: none;
+            margin-top: 10px;
+        }
+
+        .footer-link {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.85rem;
+        }
+
+        .footer-link a {
+            color: var(--mango-orange);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .footer-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <div class="logo">🥭 Mango<span>Bank</span></div>
+        <h2>Trade Verification Portal</h2>
+    </div>
+
+    <div class="input-group">
+        <label for="tokenInput">Enter Verification Code</label>
+        <input type="text" id="tokenInput" placeholder="Paste Base64 code here...">
+    </div>
+
+    <button onclick="decodeTrade()">Verify Transaction</button>
+
+    <div id="errorMsg" class="error">Invalid code provided. Please check the token.</div>
+
+    <div id="result">
+        <div class="data-row">
+            <span class="data-label">TIMESTAMP</span>
+            <span class="data-value" id="res-date">-</span>
+        </div>
+        <div class="data-row">
+            <span class="data-label">DIRECTION</span>
+            <span class="data-value" id="res-in">-</span>
+        </div>
+        <div class="data-row">
+            <span class="data-label">STAKE</span>
+            <span class="data-value" id="res-stk">-</span>
+        </div>
+        <div class="data-row">
+            <span class="data-label">LEVERAGE</span>
+            <span class="data-value" id="res-lev">-</span>
+        </div>
+        <div class="data-row">
+            <span class="data-label">TOTAL STEPS</span>
+            <span class="data-value" id="res-steps">-</span>
+        </div>
+        <div class="data-row">
+            <span class="data-label">FINAL PNL</span>
+            <span class="data-value" id="res-pnl" style="color: var(--mango-orange);">-</span>
+        </div>
+    </div>
+
+    <div class="footer-link">
+        <a href="https://github.com/KiwiiHash/ROM-Simple-banking-system" target="0">Github Page</a>
+    </div>
+</div>
+
+<script>
+    function decodeTrade() {
+        const token = document.getElementById('tokenInput').value.trim();
+        const resultDiv = document.getElementById('result');
+        const errorMsg = document.getElementById('errorMsg');
+
+        resultDiv.style.display = 'none';
+        errorMsg.style.display = 'none';
+
+        try {
+            const decodedData = JSON.parse(atob(token));
+
+            document.getElementById('res-date').innerText = decodedData.date || 'N/A';
+            document.getElementById('res-in').innerText = decodedData.in || 'N/A';
+            document.getElementById('res-stk').innerText = `$${decodedData.stk}`;
+            document.getElementById('res-lev').innerText = `${decodedData.lev}x`;
+            document.getElementById('res-steps').innerText = decodedData.steps;
+            document.getElementById('res-pnl').innerText = `$${decodedData.pnl}`;
+
+            resultDiv.style.display = 'block';
+        } catch (e) {
+            errorMsg.style.display = 'block';
+            console.error("Decoding error:", e);
+        }
+    }
+</script>
+
+</body>
+</html>
