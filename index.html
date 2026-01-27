@@ -3,88 +3,188 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NotedTools</title>
+    <title>NotedTools | ROM Dynasty Group</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap');
+
+        * {
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
 
         body {
             margin: 0;
             padding: 0;
+            background-color: #0f172a;
+            font-family: 'Inter', sans-serif;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* Hero Section */
+        .hero {
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #0f172a; /* Deep dark blue */
-            font-family: 'Inter', sans-serif;
-            color: white;
             text-align: center;
-        }
-
-        .container {
-            padding: 2rem;
+            background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
         }
 
         h1 {
-            font-size: 3.5rem;
-            margin-bottom: 0.5rem;
-            letter-spacing: -1px;
-            background: linear-gradient(to right, #f8fafc, #94a3b8);
+            font-size: clamp(3rem, 10vw, 4.5rem);
+            margin: 0;
+            letter-spacing: -2px;
+            background: linear-gradient(to right, #ffffff, #94a3b8);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        p {
-            font-size: 1.1rem;
-            color: #94a3b8;
+        .subtitle {
+            font-size: 0.9rem;
+            color: #6366f1;
             margin-bottom: 2.5rem;
             text-transform: uppercase;
-            letter-spacing: 3px;
-            font-weight: 300;
+            letter-spacing: 6px;
+            font-weight: 700;
         }
 
         .fancy-button {
+            text-decoration: none;
             position: relative;
-            padding: 15px 45px;
-            font-size: 1.2rem;
+            padding: 18px 50px;
+            font-size: 1.1rem;
             font-weight: 700;
             color: white;
             background: linear-gradient(45deg, #6366f1, #a855f7);
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.3s;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.4);
         }
 
         .fancy-button:hover {
-            transform: translateY(-3px);
+            transform: translateY(-5px) scale(1.05);
             box-shadow: 0 20px 35px -5px rgba(168, 85, 247, 0.5);
         }
 
-        .fancy-button:active {
-            transform: translateY(0);
+        /* About Section */
+        .about-section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 6rem 2rem;
+            background: #0f172a;
         }
 
-        /* Subtle glowing effect behind button */
-        .fancy-button::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            border-radius: 50px;
-            background: linear-gradient(45deg, #6366f1, #a855f7);
-            filter: blur(15px);
-            opacity: 0.3;
-            z-index: -1;
+        .glass-card {
+            max-width: 900px;
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 4rem 3rem;
+            border-radius: 32px;
+            text-align: center;
+            
+            /* Modern Fade-in Animation on Scroll */
+            view-timeline-name: --card;
+            view-timeline-axis: block;
+            animation: linear fadeUp both;
+            animation-timeline: --card;
+            animation-range: entry 20% cover 40%;
         }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(60px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .about-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            background: linear-gradient(45deg, #a855f7, #6366f1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            text-align: left;
+        }
+
+        @media (max-width: 768px) {
+            .content-grid { grid-template-columns: 1fr; }
+        }
+
+        h3 {
+            color: #f8fafc;
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid #6366f1;
+            padding-left: 15px;
+        }
+
+        p {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: #94a3b8;
+            font-weight: 300;
+        }
+
+        strong {
+            color: #e2e8f0;
+            font-weight: 600;
+        }
+
     </style>
 </head>
 <body>
 
-    <div class="container">
+    <section class="hero">
         <h1>NotedTools</h1>
-        <p>ROM Dynasty Group</p>
-        <button class="fancy-button">Tools</button>
-    </div>
+        <div class="subtitle">ROM Dynasty Group</div>
+        <a href="#about" class="fancy-button">Tools</a>
+    </section>
+
+    <section id="about" class="about-section">
+        <div class="glass-card">
+            <h2>About NotedTools</h2>
+            
+            <div class="content-grid">
+                <div>
+                    <h3>Our Goal</h3>
+                    <p>
+                        At NotedTools, our primary mission is to centralize and streamline our workflow. 
+                        We aim to make every specialized utility developed during our <strong>private projects</strong> 
+                        easily accessible in one unified location, ensuring efficiency and peak performance 
+                        for the entire team.
+                    </p>
+                </div>
+                <div>
+                    <h3>The Team</h3>
+                    <p>
+                        We are a dedicated collective within the <strong>ROM Dynasty Group</strong>—a group 
+                        of four versatile individuals driven by a passion for excellence, anchored by 
+                        the technical expertise of our <strong>self-taught programmer</strong>. Together, 
+                        we bridge the gap between creative vision and functional software.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
 
 </body>
 </html>
