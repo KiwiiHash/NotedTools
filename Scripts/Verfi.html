@@ -7,7 +7,7 @@
     <style>
         :root {
             --mango-orange: #FF8C00;
-            --mango-leaf: #4CAF50; /* Slightly brightened for dark mode visibility */
+            --mango-leaf: #4CAF50; 
             --bg-gray: #F4F7F6;
             --text-dark: #333;
             --text-light: #666;
@@ -16,7 +16,6 @@
             --input-border: #ddd;
         }
 
-        /* Dark Mode Overrides */
         @media (prefers-color-scheme: dark) {
             :root {
                 --bg-gray: #121212;
@@ -39,6 +38,41 @@
             min-height: 100vh;
         }
 
+        /* --- NEW BACK BUTTON STYLE --- */
+        .back-btn {
+            position: fixed;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: var(--mango-orange);
+            color: white;
+            padding: 15px 12px;
+            border: none;
+            border-radius: 0 8px 8px 0;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.9rem;
+            box-shadow: 2px 4px 12px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            z-index: 1000;
+        }
+
+        .back-btn:hover {
+            padding-left: 20px; /* Slight slide out effect */
+            background-color: #e67e00;
+        }
+
+        .back-btn span {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            margin-top: 5px;
+        }
+
+        /* --- EXISTING STYLES --- */
         .container {
             background: var(--container-bg);
             width: 100%;
@@ -102,7 +136,7 @@
             border-color: var(--mango-orange);
         }
 
-        button {
+        .verify-btn {
             width: 100%;
             background-color: var(--mango-orange);
             color: white;
@@ -115,7 +149,7 @@
             transition: background 0.3s;
         }
 
-        button:hover {
+        .verify-btn:hover {
             background-color: #e67e00;
         }
 
@@ -173,6 +207,10 @@
 </head>
 <body>
 
+<button class="back-btn" onclick="history.back()">
+    <b>←</b> <span>BACK</span>
+</button>
+
 <div class="container">
     <div class="header">
         <div class="logo">🥭 Mango<span>Bank</span></div>
@@ -184,7 +222,7 @@
         <input type="text" id="tokenInput" placeholder="Paste Base64 code here...">
     </div>
 
-    <button onclick="decodeTrade()">Verify Transaction</button>
+    <button class="verify-btn" onclick="decodeTrade()">Verify Transaction</button>
 
     <div id="errorMsg" class="error">Invalid code provided. Please check the token.</div>
 
