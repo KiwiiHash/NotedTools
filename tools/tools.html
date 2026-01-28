@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tools | NotedTools</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap');
+        
+        body {
+            margin: 0;
+            background-color: #0f172a;
+            color: white;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 4rem 2rem;
+        }
+
+        .header { text-align: center; margin-bottom: 4rem; }
+        .header h1 { font-size: 3rem; margin: 0; color: #f8fafc; }
+        .header p { color: #6366f1; letter-spacing: 2px; text-transform: uppercase; font-size: 0.8rem; font-weight: 700; }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        .tool-card {
+            text-decoration: none;
+            color: inherit;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 2.5rem;
+            border-radius: 24px;
+            transition: all 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tool-card:hover {
+            background: rgba(99, 102, 241, 0.1);
+            border-color: #6366f1;
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .tool-card h2 { font-size: 1.8rem; margin: 1rem 0; color: #f8fafc; }
+        .tool-card p { color: #94a3b8; font-size: 0.95rem; line-height: 1.5; }
+
+        .icon {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        /* Coming Soon style */
+        .coming-soon {
+            opacity: 0.6;
+            cursor: not-allowed;
+            border-style: dashed;
+        }
+        .coming-soon:hover { transform: none; border-color: rgba(255,255,255,0.1); background: rgba(255,255,255,0.01); }
+
+        .back-btn {
+            margin-top: 4rem;
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+        .back-btn:hover { color: white; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <p>ROM Dynasty Group</p>
+        <h1>NotedTools Dashboard</h1>
+    </div>
+
+    <div class="tools-grid">
+        <a href="#" class="tool-card">
+            <div class="icon">💰</div>
+            <h2>Banking</h2>
+            <p>Financial management and private ledger utilities for project tracking.</p>
+        </a>
+
+        <a href="#" class="tool-card">
+            <div class="icon">💬</div>
+            <h2>Forum</h2>
+            <p>Internal communication hub and project discussion boards.</p>
+        </a>
+
+        <div class="tool-card coming-soon">
+            <div class="icon">🔒</div>
+            <h2>More Coming Soon</h2>
+            <p>New private utilities are currently under development.</p>
+        </div>
+    </div>
+
+    <a href="../index.html" class="back-btn">← Back to Home</a>
+
+</body>
+</html>
